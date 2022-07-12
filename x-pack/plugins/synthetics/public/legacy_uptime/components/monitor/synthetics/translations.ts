@@ -13,3 +13,7 @@ export const VIEW_PERFORMANCE = i18n.translate(
     defaultMessage: 'View performance breakdown',
   }
 );
+
+export const VIEW_APM_TRACE = i18n.translate('xpack.synthetics.pingList.synthetics.apm_trace', {
+  defaultMessage: 'View APM trace',
+});

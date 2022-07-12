@@ -82,6 +82,19 @@ export const JourneyStepType = t.intersection([
     error: t.type({
       message: t.string,
     }),
+    'service.name': t.string,
+    'transaction.id': t.string,
+    'transaction.name': t.string,
+    'transaction.type': t.string,
+    'trace.id': t.string,
+    rum_transactions: t.array(
+      t.type({
+        id: t.string,
+        trace_id: t.string,
+        type: t.string,
+        name: t.string,
+      })
+    ),
   }),
   t.type({
     _id: t.string,

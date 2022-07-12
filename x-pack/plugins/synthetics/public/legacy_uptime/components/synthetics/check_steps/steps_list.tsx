@@ -22,7 +22,7 @@ import { STATUS_LABEL } from '../../monitor/ping_list/translations';
 import { COLLAPSE_LABEL, EXPAND_LABEL, STEP_NAME_LABEL } from '../translations';
 import { StatusBadge } from '../status_badge';
 import { StepDetailLink } from '../../common/step_detail_link';
-import { VIEW_PERFORMANCE } from '../../monitor/synthetics/translations';
+import { VIEW_APM_TRACE, VIEW_PERFORMANCE } from '../../monitor/synthetics/translations';
 import { StepImage } from './step_image';
 import { useExpandedRow } from './use_expanded_row';
 import { StepDuration } from './step_duration';
@@ -183,6 +183,26 @@ export const StepsList = ({
             {VIEW_PERFORMANCE}
           </StepDetailLink>
         ),
+    },
+    {
+      align: 'left',
+      field: 'timestamp',
+      name: '',
+      mobileOptions: { show: false },
+      render: (_val: string, item) => {
+        if (!item['transaction.id']) {
+          return;
+        }
+
+        // we are creating just a link for seeing the APM ui
+        // but bear in mind that it will be possible to have multiple transactions in the same step
+        const apmLink = `${basePath}/app/apm/services/${item['service.name']}/transactions/view?kuery=&transactionName=${item['transaction.name']}&transactionId=${item['transaction.id']}&traceId=${item['trace.id']}&transactionType=${item['transaction.type']}&rangeFrom=now-15d&rangeTo=now`;
+        return compactView ? (
+          <EuiButtonIcon href={apmLink} target="_blank" iconType="visArea" />
+        ) : (
+          <a href={apmLink}>{VIEW_APM_TRACE}</a>
+        );
+      },
     },
     {
       width: '40px',
